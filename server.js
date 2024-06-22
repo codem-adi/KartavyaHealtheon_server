@@ -31,7 +31,7 @@ app.get('/api/v1/users', (req, res) => {
 
 app.use('/api/users', userController);
 
-// Define port number
+// Define port number    
 const PORT = process.env.PORT || 3001;
 
 // Start the server
