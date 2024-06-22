@@ -20,6 +20,10 @@ const corsOptions = {
 
 app.use(cors(corsOptions))
 
+app.get('/', (req, res) => {
+     res.send('Hello, Server is running.');
+});
+
 // Define a route
 app.get('/api/v1/users', (req, res) => {
      res.send('Hello, World!');
