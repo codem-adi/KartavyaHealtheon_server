@@ -11,8 +11,9 @@ import userController from './controllers/userController.js';
 const app = express();
 app.use(express.json())
 
+console.log("process.env.WHITE_LIST_URLS ", process.env.WHITE_LIST_URLS);
 const corsOptions = {
-     origin: ['http://localhost:5173', 'http://192.168.0.106:5173'],
+     origin: process.env.WHITE_LIST_URLS,
      methods: ['GET', 'POST', "PUT"],
      allowedHeaders: ['Content-Type'],
      optionsSuccessStatus: 200
