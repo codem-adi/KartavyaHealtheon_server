@@ -33,7 +33,6 @@ const PORT = process.env.PORT || 3001;
 // Start the server
 app.listen(PORT, async () => {
      // Connect to MongoDB using Mongoose
-     console.log("DB_URL ", process.env.DB_URL);
      await mongoose.connect(process.env.DB_URL);
      console.log(`Server is running on port ${PORT}`);
 });
