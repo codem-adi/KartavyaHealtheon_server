@@ -129,11 +129,17 @@ app.post('/process-sheet', async (req, res) => {
      const sheetData = req.body;
 
      try {
+          if (!sheetData?.whichWebsite) {
+               return res.status(404).json({ success: false, message: "No right whichWebsite was provided." });
+          }
+          if (!sheetData?.Sheet1.length) {
+               return res.status(404).json({ success: false, message: "Sheet have no data in it." });
+          }
           const results = await processSheet1(sheetData);
-          res.json({ success: true, results });
+          return res.json({ success: true, results });
      } catch (error) {
           console.error('Error processing sheet:', error);
-          res.status(500).json({ success: false, error: 'Error processing sheet' });
+          return res.status(500).json({ success: false, error: 'Error processing sheet' });
      }
 });
 
@@ -141,7 +147,8 @@ app.post('/process-sheet', async (req, res) => {
 app.listen(PORT, async () => {
      // Connect to MongoDB using Mongoose
      // console.log("DB_URL ", process.env.DB_URL);
-     // await mongoose.connect(process.env.DB_URL);
+     await mongoose.connect(process.env.DB_URL);
      console.log(`Server is running on port ${PORT}`);
 });
 
+// https://kartavyahealtheon-server.onrender.com/process-sheet
