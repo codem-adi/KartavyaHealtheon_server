@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
      phone: { type: String, required: true },
      memberId: { type: String, unique: true },
      govermentId: { type: GoverMentID },
-     employeType: { type: String, enum: ["HealthWorker", "Trainer", "Physio"] }
+     employeType: { type: String, enum: ["Health Worker", "Trainer", "Physio"] }
 }, { versionKey: 0 });
 
 const User = mongoose.model('User', userSchema);
