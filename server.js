@@ -136,7 +136,8 @@ app.post('/process-sheet', async (req, res) => {
                return res.status(404).json({ success: false, message: "Sheet have no data in it." });
           }
           const results = await processSheet1(sheetData);
-          return res.json({ success: true, results });
+          return res.json(results);
+          
      } catch (error) {
           console.error('Error processing sheet:', error);
           return res.status(500).json({ success: false, error: 'Error processing sheet' });
