@@ -40,7 +40,7 @@ const macleods = 'https://macleods.healthflixcare.com/Login/mr_login';
 const admin = 'https://kartavya.healtheonbooking.com/MR/index/';
 
 
-async function login(email, password, whichWebsite) {
+async function login(email, password, whichWebsite, index) {
      const formData = new URLSearchParams();
      formData.append('email', email);
      formData.append('password', password);
@@ -98,10 +98,10 @@ async function login(email, password, whichWebsite) {
 
           // Check if the response is a redirect
           if (response.request.res.responseUrl === "https://macleods.healthflixcare.com/Mr/check_camp" || response.request.res.responseUrl === "https://kartavya.healtheonbooking.com/MR/Dashboard") {
-               console.log("Login successful on ", whichWebsite);
+               console.log(index, "Login successful on ", whichWebsite);
                return true; // Login successful
           } else {
-               console.log("Login failed on ", whichWebsite);
+               console.log(index, "Login failed on ", whichWebsite);
                return false; // Login failed
           }
      } catch (error) {
@@ -116,18 +116,17 @@ async function processSheet1(sheetData) {
      console.log("sheetData ", Sheet1.length);
      console.log("sheetData ", whichWebsite);
 
-     for (const data of Sheet1) {
+     for (let index = 0; index < Sheet1.length; index++) {
+          const data = Sheet1[index];
           const { Email, Password } = data;
           const loginResult = await login(Email, Password, whichWebsite);
-          results.push({ Email, Password, LoginResult: loginResult });
+          results.push({ Email, Password, LoginResult: loginResult, index });
      }
-
      return results;
 }
 
 app.post('/process-sheet', async (req, res) => {
      const sheetData = req.body;
-
      try {
           if (!sheetData?.whichWebsite) {
                return res.status(404).json({ success: false, message: "No right whichWebsite was provided." });
@@ -137,7 +136,7 @@ app.post('/process-sheet', async (req, res) => {
           }
           const results = await processSheet1(sheetData);
           return res.json(results);
-          
+
      } catch (error) {
           console.error('Error processing sheet:', error);
           return res.status(500).json({ success: false, error: 'Error processing sheet' });
