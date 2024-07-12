@@ -119,8 +119,8 @@ async function processSheet1(sheetData) {
      for (let index = 0; index < Sheet1.length; index++) {
           const data = Sheet1[index];
           const { Email, Password } = data;
-          const loginResult = await login(Email, Password, whichWebsite);
-          results.push({ Email, Password, LoginResult: loginResult, index });
+          const loginResult = await login(Email, Password, whichWebsite, index);
+          results.push({ Email, Password, LoginResult: loginResult });
      }
      return results;
 }
